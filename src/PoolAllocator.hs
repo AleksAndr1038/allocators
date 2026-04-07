@@ -1,3 +1,5 @@
+module PoolAllocator where
+
 import Control.Monad.ST
 import Data.Array.ST
 import Data.STRef

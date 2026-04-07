@@ -49,9 +49,6 @@ import Data.STRef
 
 main :: IO ()
 main = do
-    putStrLn "=== Pool Allocator Example ===\n"
-    
-    -- Run ST computation and get the result
     let result = runST $ do
             putStrLn "1. Creating pool with 5 blocks of 64 bytes"
             allocator <- createPool 64 5
