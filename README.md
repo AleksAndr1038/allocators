@@ -42,7 +42,7 @@ This repository contains pool and free-list allocators implementation on haskell
 
 ## Usage/Examples
 
-```javascript
+```haskell
 import PoolAllocator
 import Control.Monad.ST
 import Data.STRef
