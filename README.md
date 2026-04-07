@@ -1,14 +1,14 @@
 
 # Pool Allocator
 
-This repository contains pool and free-list allocators implementation on haskell
+This repository contains pool allocators implementation on haskell
 
 
 ## API Reference
 
 #### createPool
 
-```http
+```haskell
   createPool :: Int -> Int -> ST s (PoolAllocator s)
 ```
 
@@ -19,7 +19,7 @@ This repository contains pool and free-list allocators implementation on haskell
 
 #### allocate
 
-```http
+```haskell
   allocate :: PoolAllocator s -> ST s (Maybe Int)
 ```
 
@@ -29,7 +29,7 @@ This repository contains pool and free-list allocators implementation on haskell
 
 #### deallocate
 
-```http
+```haskell
   deallocate :: PoolAllocator s -> Int -> ST s ()
 ```
 
