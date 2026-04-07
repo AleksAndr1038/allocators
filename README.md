@@ -1,7 +1,7 @@
 
 # Pool Allocator
 
-This repository contains pool allocators implementation on haskell
+This repository contains pool allocator implementation on haskell
 
 
 ## API Reference
