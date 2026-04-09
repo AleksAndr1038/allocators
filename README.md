@@ -72,7 +72,6 @@ main = do
             return (block1, block2, block3, freeListState,
                     freeListAfter, block4, block5, block6, block7)
 
-    -- теперь печатаем в IO
     putStrLn "1. Creating pool with 5 blocks of 64 bytes"
 
     let (block1, block2, block3, freeBefore,
