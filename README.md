@@ -50,48 +50,55 @@ import Data.STRef
 main :: IO ()
 main = do
     let result = runST $ do
-            putStrLn "1. Creating pool with 5 blocks of 64 bytes"
             allocator <- createPool 64 5
-            
-            putStrLn "\n2. Allocating blocks:"
+
             block1 <- allocate allocator
-            putStrLn $ "   Block 1 allocated: " ++ show block1
-            
             block2 <- allocate allocator
-            putStrLn $ "   Block 2 allocated: " ++ show block2
-            
             block3 <- allocate allocator
-            putStrLn $ "   Block 3 allocated: " ++ show block3
-            
+
             freeListState <- readSTRef (freeList allocator)
-            putStrLn $ "\n3. Remaining free blocks: " ++ show freeListState
-            
-            putStrLn "\n4. Deallocating block 2"
+
             case block2 of
-                Just idx -> do
-                    deallocate allocator idx
-                    putStrLn $ "   Block " ++ show idx ++ " deallocated"
+                Just idx -> deallocate allocator idx
                 Nothing -> return ()
-            
+
             freeListAfter <- readSTRef (freeList allocator)
-            putStrLn $ "\n5. Free blocks after deallocation: " ++ show freeListAfter
-            
-            putStrLn "\n6. Allocating new block:"
+
             block4 <- allocate allocator
-            putStrLn $ "   Block 4 allocated: " ++ show block4
-            
-            putStrLn "\n7. Allocating remaining blocks:"
             block5 <- allocate allocator
-            putStrLn $ "   Block 5: " ++ show block5
-            
             block6 <- allocate allocator
-            putStrLn $ "   Block 6: " ++ show block6
-            
-            putStrLn "\n8. Trying to allocate beyond limit:"
             block7 <- allocate allocator
-            putStrLn $ "   Block 7: " ++ show block7
-            
-            return (block1, block2, block3, block4, block5, block6, block7)
+
+            return (block1, block2, block3, freeListState,
+                    freeListAfter, block4, block5, block6, block7)
+
+    -- теперь печатаем в IO
+    putStrLn "1. Creating pool with 5 blocks of 64 bytes"
+
+    let (block1, block2, block3, freeBefore,
+         freeAfter, block4, block5, block6, block7) = result
+
+    putStrLn "\n2. Allocating blocks:"
+    putStrLn $ "   Block 1 allocated: " ++ show block1
+    putStrLn $ "   Block 2 allocated: " ++ show block2
+    putStrLn $ "   Block 3 allocated: " ++ show block3
+
+    putStrLn $ "\n3. Remaining free blocks: " ++ show freeBefore
+
+    putStrLn "\n4. Deallocating block 2"
+    putStrLn "   Block 2 deallocated"
+
+    putStrLn $ "\n5. Free blocks after deallocation: " ++ show freeAfter
+
+    putStrLn "\n6. Allocating new block:"
+    putStrLn $ "   Block 4 allocated: " ++ show block4
+
+    putStrLn "\n7. Allocating remaining blocks:"
+    putStrLn $ "   Block 5: " ++ show block5
+    putStrLn $ "   Block 6: " ++ show block6
+
+    putStrLn "\n8. Trying to allocate beyond limit:"
+    putStrLn $ "   Block 7: " ++ show block7
 
 -- Output:
 -- 1. Creating pool with 5 blocks of 64 bytes
