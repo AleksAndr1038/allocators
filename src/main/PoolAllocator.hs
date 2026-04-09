@@ -16,14 +16,14 @@ data PoolAllocator s = PoolAllocator {
 }
 
 createPool :: Int -> Int -> ST s (PoolAllocator s)
-createPool blockSize numBlocks = do
-    pool <- newArray (0, numBlocks) Free
-    freeList <- newSTRef [0..numBlocks - 1]
+createPool blockSize' numBlocks' = do
+    pool' <- newArray (0, numBlocks' - 1) Free
+    freeList' <- newSTRef [0..numBlocks' - 1]
     return $ PoolAllocator {
-        blockSize = blockSize,
-        numBlocks = numBlocks,
-        freeList = freeList,
-        pool = pool
+        blockSize = blockSize',
+        numBlocks = numBlocks',
+        freeList = freeList',
+        pool = pool'
     }
 
 allocate :: PoolAllocator s -> ST s (Maybe Int)
